@@ -56,14 +56,14 @@ function APIMethod(method: string) {
  * Declare an API client class
  * @param url - The base URL of the API server
  */
-function APIClient(url: string) {
+export function APIClient(url: string) {
   return function (target: any, _context: ClassDecoratorContext) {
     target.prototype.api_url = url;
   }
 }
 
-const get = APIMethod('GET');
-const post = APIMethod('POST');
-const put = APIMethod('PUT');
-const patch = APIMethod('PATCH');
-const del = APIMethod('DELETE');
+export const get = APIMethod('GET');
+export const post = APIMethod('POST');
+export const put = APIMethod('PUT');
+export const patch = APIMethod('PATCH');
+export const del = APIMethod('DELETE');

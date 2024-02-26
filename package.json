@@ -1,0 +1,30 @@
+{
+  "name": "tiny-api-client",
+  "version": "0.0.1",
+  "description": "The short and sweet way to write API consumers",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sanjacob/tiny-api-client-ts.git"
+  },
+  "keywords": [
+    "api",
+    "api-client",
+    "client",
+    "decorator"
+  ],
+  "author": "Jacob Sánchez",
+  "license": "LGPL-2.1",
+  "bugs": {
+    "url": "https://github.com/sanjacob/tiny-api-client-ts/issues"
+  },
+  "homepage": "https://github.com/sanjacob/tiny-api-client-ts#readme",
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}
