@@ -12,7 +12,9 @@
 
 The short and sweet way to write API consumers
 
-```python
+```typescript
+import { APIClient, get, post, del } from 'tiny-api-client';
+
 @APIClient('https://example.org/api/public/')
 class MyAPIClient:
   @get(({userId}) => `/users/${userId}`)

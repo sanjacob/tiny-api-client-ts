@@ -4,6 +4,8 @@
  *
  * @example
  * ```
+ * import { get, APIClient } from 'tiny-api-client';
+ *
  * @APIClient('https://api.example.com')
  * class MyClient {
  *   @get(({userId, photoId}) => `/users/${userId}/photos/${photoId}`)
