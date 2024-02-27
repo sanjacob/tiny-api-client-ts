@@ -66,6 +66,11 @@ const makeRequest = function(
   return handleResponse(response, options.json);
 }
 
+interface APIClientInstance {
+  apiUrl: ({v}: {v: number}) => string;
+  apiOptions: ClientOptions
+}
+
 /**
  * Declare an API endpoint method
  * @param method - The HTTP method to use in requests
@@ -91,8 +96,9 @@ function APIMethod(method: string) {
         this: This, params: PArgs, fetchOptions: FetchOptions,
         response?: Response, ...args: Args
       ): Return {
-        // @ts-expect-error
-        const endpoint = this.apiUrl({v: merged.version}) + route(params);
+        const client = this as APIClientInstance;
+        const endpoint = client.apiUrl({v: merged.version}) + route(params);
+        const fetch = client.apiOptions.fetch;
         const r = makeRequest(
           fetch, endpoint, merged, { method, ...fetchOptions }
         ) as Response;

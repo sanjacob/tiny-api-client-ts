@@ -19,6 +19,7 @@
 
 export interface ClientOptions {
   resultsKey?: string;
+  fetch?: any;
 };
 
 export interface EndpointOptions {
