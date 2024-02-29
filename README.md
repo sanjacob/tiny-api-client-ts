@@ -49,6 +49,12 @@ interfaces. Furthermore, half of the features that exist in the Python
 library do not exist in this one yet. The features that do exist in this
 library have not been tested thoroughly.
 
+### Requirements
+
+If you are using Node.js:
+
+- Node.js >=18.x (requires Fetch API)
+
 
 
 ## Features
