@@ -10,7 +10,7 @@
  * class MyClient {
  *   @get(({userId, photoId}) => `/users/${userId}/photos/${photoId}`, { version: 2 })
  *   findPhoto(params: {userId: string, photoId?: string},
- *             options: any, response?: {photoUrl: string}) {
+ *             options: any, response?: Photo): Photo {
  *     // do something with the response
  *   }
  * }
@@ -106,7 +106,7 @@ function APIMethod(method: string) {
 
     const merged: Required<EndpointOptions> = {...endpointDefaults, ...options};
 
-    return function<This, PArgs extends {[key: string]: string}, FetchOptions, Response, Args extends any[], Return>(
+    return function<This, PArgs extends {[key: string]: any}, FetchOptions, Response, Args extends any[], Return>(
         target: (
           this: This, pargs: PArgs, fetchOptions: FetchOptions,
           response?: Response, ...args: Args
@@ -120,12 +120,22 @@ function APIMethod(method: string) {
         this: This, params: PArgs, fetchOptions: FetchOptions,
         response?: Response, ...args: Args
       ): Return {
+        // We know better
         const client = this as APIClientInstance;
-        const endpoint = client.apiUrl({v: merged.version}) + route(params);
+
+        // Returns '' instead of undefined for route params
+        const proxy = new Proxy(
+          params ?? {}, { get: (t, p: string) => (t[p] ?? '') }
+        );
+
+        const endpoint = client.apiUrl({v: merged.version}) + route(proxy);
         const fetch = client.apiOptions.fetch;
+
+        // Return the response as the original function intended
         const r = makeRequest(
           fetch, endpoint, merged, { method, ...fetchOptions }
         ) as Response;
+
         return target.call(this, params, fetchOptions, r, ...args);
       }
     }
