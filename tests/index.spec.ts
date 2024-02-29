@@ -234,3 +234,28 @@ describe('endpoint features', () => {
     expect(f.mock.calls[2][0]).toBe('https://example.org/api/public/v3/my-endpoint');
   });
 });
+
+describe('session and auth', () => {
+  test('token', () => {
+    const f = jest.fn((route, options) => ({ json: () => exampleRes }));
+
+    @APIClient(() => exampleUrl, { fetch: f })
+    class MyClient {
+      apiToken: string;
+      constructor(token: string) { this.apiToken = token; }
+
+      @get(() => '/my-endpoint')
+      getUsers(params: {} = {}, options: {} = {}, response?: string[]): string[] {
+        return response ?? [];
+      }
+    }
+
+    const myToken = 'dQw4w9WgXcQ';
+
+    const client = new MyClient(myToken);
+    const r = client.getUsers();
+
+    expect(f.mock.calls[0][1]).toHaveProperty('headers',
+      { Authorization: 'Bearer ' + myToken });
+  });
+});

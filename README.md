@@ -62,6 +62,7 @@ If you are using Node.js:
 - Endpoints can be declared with one of: `@get`, `@post`, `@put`, `@patch`, `@del`
 - Auto-conversion of responses to *JSON*, can be disabled per endpoint
 - Route parameters are optional
+- Set the `.apiToken` property to send a bearer token
 - Easy integration with your custom API models
 - Full control over route parameter templates
 - Support for API version insertion in url template

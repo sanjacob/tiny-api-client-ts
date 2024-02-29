@@ -52,7 +52,8 @@ export interface EndpointOptions {
 
 interface APIClientInstance {
   apiUrl: ({v}: {v: number}) => string;
-  apiOptions: ClientOptions
+  apiOptions: ClientOptions;
+  apiToken?: string;
 }
 
 /** Defaults */
@@ -106,7 +107,10 @@ function APIMethod(method: string) {
 
     const merged: Required<EndpointOptions> = {...endpointDefaults, ...options};
 
-    return function<This, PArgs extends {[key: string]: any}, FetchOptions, Response, Args extends any[], Return>(
+    return function<This extends object,
+                    PArgs extends {[key: string]: any},
+                    FetchOptions extends {[key: string]: any},
+                    Response, Args extends any[], Return>(
         target: (
           this: This, pargs: PArgs, fetchOptions: FetchOptions,
           response?: Response, ...args: Args
@@ -131,9 +135,17 @@ function APIMethod(method: string) {
         const endpoint = client.apiUrl({v: merged.version}) + route(proxy);
         const fetch = client.apiOptions.fetch;
 
+        const token = ('apiToken' in this) ?
+          { Authorization: `Bearer ${this.apiToken}` } : {};
+
+        const requestOptions = {
+          method, ...fetchOptions,
+          headers: { ...token, ...fetchOptions?.headers }
+        };
+
         // Return the response as the original function intended
         const r = makeRequest(
-          fetch, endpoint, merged, { method, ...fetchOptions }
+          fetch, endpoint, merged, requestOptions
         ) as Response;
 
         return target.call(this, params, fetchOptions, r, ...args);
