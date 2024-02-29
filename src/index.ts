@@ -37,9 +37,37 @@
  * 02110-1301  USA
  */
 
-import { ClientOptions, EndpointOptions } from './types';
-import { clientDefaults, endpointDefaults } from './defaults';
 
+/** Interfaces */
+
+export interface ClientOptions {
+  resultsKey?: string;
+  fetch?: any;
+};
+
+export interface EndpointOptions {
+  version?: number;
+  json?: boolean;
+};
+
+interface APIClientInstance {
+  apiUrl: ({v}: {v: number}) => string;
+  apiOptions: ClientOptions
+}
+
+/** Defaults */
+
+export const clientDefaults: Required<ClientOptions> = {
+  resultsKey: 'results',
+  fetch: fetch
+}
+
+export const endpointDefaults: Required<EndpointOptions> = {
+  json: true,
+  version: 1
+}
+
+/** Fetch */
 
 const handleResponse = function<Response extends { json: () => any }>(
   response: Response, json: boolean
@@ -66,10 +94,6 @@ const makeRequest = function(
   return handleResponse(response, options.json);
 }
 
-interface APIClientInstance {
-  apiUrl: ({v}: {v: number}) => string;
-  apiOptions: ClientOptions
-}
 
 /**
  * Declare an API endpoint method
