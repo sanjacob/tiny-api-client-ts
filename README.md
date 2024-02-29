@@ -3,8 +3,9 @@
 [![NPM Registry][version-shield]][npm] [![License: GPL  v2][license-shield]][gnu]
 
 > [!WARNING]
-> This package is in early development, and is lacking features
-> you would normally expect. Please don't use in production.
+> This package is in early development,
+> and its API is still changing quite often.
+> Use in production at your own risk.
 > On the other hand, contributions are more than welcome.
 
 
@@ -45,9 +46,8 @@ This package is my TypeScript adaptation of the tiny-api-client library I
 originally wrote for Python. Its purpose is to provide an easy way for API
 consumers, such as Vue or React frontends, to call operations on the API.
 Note that there are significant differences between the Python and TS
-interfaces. Furthermore, half of the features that exist in the Python
-library do not exist in this one yet. The features that do exist in this
-library have not been tested thoroughly.
+interfaces. Furthermore, some of the features that exist in the Python
+library do not exist in this one yet. Some features may present bugs.
 
 ### Requirements
 

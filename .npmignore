@@ -1,1 +1,6 @@
 bun.lockb
+tests
+.babelrc
+jest.config.ts
+.github
+.eslintrc.yml
